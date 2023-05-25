@@ -1,28 +1,30 @@
-import Convert.Octal;
-import Convert.Hexadecimal;
-import Convert.Decimal;
-import Convert.Binary;
-import Convert.Text;
 import java.util.Scanner;
 
-public class StringTranslator {
+public class GlobalConverter {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        String inputString;
+        String translationBase;
 
-        // Saisie de la chaîne de caractères à traduire
-        System.out.print("Saisissez une chaîne de caractères à traduire : ");
-        String inputString = scanner.nextLine();
+        if (args.length > 0) {
+            // Utiliser les arguments fournis
+            inputString = args[1];
+            translationBase = args[0];
+        } else {
+            Scanner scanner = new Scanner(System.in);
+
+            // Saisie de la chaîne de caractères à traduire
+            System.out.print("Saisissez une chaîne de caractères à traduire : ");
+            inputString = scanner.nextLine();
+
+            // Saisie de la base de traduction souhaitée
+            translationBase = getTranslationBase(scanner);
+
+            scanner.close();
+        }
 
         // Vérification de la validité de la chaîne de caractères
         if (!isValidString(inputString)) {
             System.out.println("La chaîne de caractères saisie est invalide.");
-            return;
-        }
-
-        // Saisie de la base de traduction souhaitée
-        String translationBase = getTranslationBase(scanner);
-        if (translationBase == null) {
-            System.out.println("La base de traduction saisie est invalide.");
             return;
         }
 
@@ -34,6 +36,7 @@ public class StringTranslator {
     }
 
     private static boolean isValidString(String inputString) {
+        // Vérifie si la chaîne de caractères ne contient que des lettres et des chiffres
         return inputString.matches("[a-zA-Z0-9]+");
     }
 
@@ -43,19 +46,19 @@ public class StringTranslator {
 
         switch (translationBase) {
             case "hexadecimal":
-            case "h":
+            case "-h":
                 return "hexadecimal";
             case "octal":
-            case "o":
+            case "-o":
                 return "octal";
             case "decimal":
-            case "d":
+            case "-d":
                 return "decimal";
             case "binary":
-            case "b":
+            case "-b":
                 return "binary";
             case "text":
-            case "t":
+            case "-t":
                 return "text";
             default:
                 return null; // Base invalide
@@ -121,6 +124,7 @@ public class StringTranslator {
     }
 
     private static String convertToDecimal(int value) {
+        // Convertit la valeur en une chaîne de caractères représentant sa valeur décimale
         return String.valueOf(value);
     }
 
@@ -136,4 +140,3 @@ public class StringTranslator {
         return binary.toString();
     }
 }
-
