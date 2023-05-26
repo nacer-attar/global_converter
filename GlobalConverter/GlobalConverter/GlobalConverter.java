@@ -1,3 +1,4 @@
+import package.convert.*;
 import java.util.Scanner;
 
 public class GlobalConverter {
